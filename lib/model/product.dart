@@ -8,12 +8,12 @@ import 'tag.dart';
 part 'product.g.dart';
 
 // Function to deserialize a JSON string into a list of popular products
-List<Product> popularProductListFromJson(String val) => List<Product>.from(
-    json.decode(val)['data'].map((val) => Product.popularProductFromJson(val)));
+List<Product> popularProductListFromJson(String val) =>
+    List<Product>.from(json.decode(val)['data'].map((val) => Product.popularProductFromJson(val)));
 
 // Function to deserialize a JSON string into a list of products
-List<Product> productListFromJson(String val) => List<Product>.from(
-    json.decode(val)['data'].map((val) => Product.productFromJson(val)));
+List<Product> productListFromJson(String val) =>
+    List<Product>.from(json.decode(val)['data'].map((val) => Product.productFromJson(val)));
 
 // Hive Type Adapter for the Product class
 @HiveType(typeId: 3)
@@ -47,15 +47,21 @@ class Product {
     required this.tags,
   });
 
+  double get totalPrice {
+    double total = 0.0;
+    for (Tag tag in tags) {
+      total += tag.price;
+    }
+    return total;
+  }
+
   // Factory method to create a popular product instance from a JSON map
   factory Product.popularProductFromJson(Map<String, dynamic> data) => Product(
         id: data['id'],
         // Access nested attributes to get the name, description, and images
         name: data['attributes']['product']['data']['attributes']['name'],
-        description: data['attributes']['product']['data']['attributes']
-            ['description'],
-        images: List<String>.from(data['attributes']['product']['data']
-                ['attributes']['images']['data']
+        description: data['attributes']['product']['data']['attributes']['description'],
+        images: List<String>.from(data['attributes']['product']['data']['attributes']['images']['data']
             .map((image) => image['attributes']['url'])),
         tags: [],
       );
@@ -65,9 +71,7 @@ class Product {
         id: data['id'],
         name: data['attributes']['name'],
         description: data['attributes']['description'],
-        images: List<String>.from(data['attributes']['images']['data']
-            .map((image) => image['attributes']['url'])),
-        tags: List<Tag>.from(
-            data['attributes']['tags']['data'].map((val) => Tag.fromJson(val))),
+        images: List<String>.from(data['attributes']['images']['data'].map((image) => image['attributes']['url'])),
+        tags: List<Tag>.from(data['attributes']['tags']['data'].map((val) => Tag.fromJson(val))),
       );
 }

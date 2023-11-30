@@ -1,4 +1,5 @@
 import 'package:my_grocery/controller/auth_controller.dart';
+import 'package:my_grocery/controller/cart_controller.dart';
 import 'package:my_grocery/controller/category_controller.dart';
 import 'package:my_grocery/controller/home_controller.dart';
 import 'package:my_grocery/controller/product_controller.dart';
@@ -11,6 +12,8 @@ HomeController homeController = HomeController.instance;
 
 // Handles product-related functionality, including fetching, displaying, and managing products.
 ProductController productController = ProductController.instance;
+
+CartController cartController = CartController.instance;
 
 // Manages the state and logic related to the dashboard or main screen of the application,
 // coordinating various components or sections.

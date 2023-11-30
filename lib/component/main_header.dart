@@ -3,23 +3,23 @@ import 'package:flutter/material.dart' hide Badge;
 import 'package:get/get.dart';
 import 'package:my_grocery/controller/controllers.dart';
 
+import '../view/cart/cart_screen.dart';
+
 class MainHeader extends StatelessWidget {
   const MainHeader({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    // Return a container with a row layout for the main header
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: <BoxShadow>[
-          BoxShadow(color: Colors.grey.withOpacity(0.4), blurRadius: 10)
+          BoxShadow(color: Colors.grey.withOpacity(0.4), blurRadius: 10),
         ],
       ),
       padding: const EdgeInsets.all(10),
       child: Row(
         children: [
-          // Expanded container containing a text field for product search
           Expanded(
             child: Container(
               decoration: BoxDecoration(
@@ -48,17 +48,14 @@ class MainHeader extends StatelessWidget {
                           ? IconButton(
                               icon: const Icon(Icons.clear),
                               onPressed: () {
-                                FocusScope.of(context)
-                                    .requestFocus(FocusNode());
-                                productController.searchTextEditController
-                                    .clear();
+                                FocusScope.of(context).requestFocus(FocusNode());
+                                productController.searchTextEditController.clear();
                                 productController.searchVal.value = '';
                                 productController.getProducts();
                               },
                             )
                           : null,
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 14, vertical: 16),
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
                       fillColor: Colors.white,
                       filled: true,
                       border: OutlineInputBorder(
@@ -72,47 +69,33 @@ class MainHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          // Container for filter icon
-          Container(
-            height: 46,
-            width: 46,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              shape: BoxShape.circle,
-              boxShadow: <BoxShadow>[
-                BoxShadow(color: Colors.grey.withOpacity(0.6), blurRadius: 8),
-              ],
-            ),
-            padding: const EdgeInsets.all(12),
-            child: const Icon(
-              Icons.filter_alt_outlined,
-              color: Colors.grey,
-            ),
-          ),
-          const SizedBox(width: 10),
-          // Badge-wrapped container for shopping cart icon
-          Badge(
-            badgeContent: const Text(
-              "1",
-              style: TextStyle(color: Colors.white),
-            ),
-            badgeStyle: BadgeStyle(
-              badgeColor: Theme.of(context).primaryColor,
-            ),
-            child: Container(
-              height: 46,
-              width: 46,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                shape: BoxShape.circle,
-                boxShadow: <BoxShadow>[
-                  BoxShadow(color: Colors.grey.withOpacity(0.6), blurRadius: 8),
-                ],
+          GestureDetector(
+            onTap: () {
+              Get.to(() => CartScreen());
+            },
+            child: Badge(
+              badgeContent: Obx(() => Text(
+                    cartController.cartItems.length.toString(),
+                    style: TextStyle(color: Colors.white),
+                  )),
+              badgeStyle: BadgeStyle(
+                badgeColor: Theme.of(context).primaryColor,
               ),
-              padding: const EdgeInsets.all(12),
-              child: const Icon(
-                Icons.shopping_cart_outlined,
-                color: Colors.grey,
+              child: Container(
+                height: 46,
+                width: 46,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(color: Colors.grey.withOpacity(0.6), blurRadius: 8),
+                  ],
+                ),
+                padding: const EdgeInsets.all(12),
+                child: const Icon(
+                  Icons.shopping_cart_outlined,
+                  color: Colors.grey,
+                ),
               ),
             ),
           ),

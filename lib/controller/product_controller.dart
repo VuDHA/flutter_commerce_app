@@ -45,9 +45,6 @@ class ProductController extends GetxController {
     } finally {
       // Set the loading state for products to false after fetching is complete
       isProductLoading(false);
-
-      // Print the length of the product list for debugging purposes
-      print(productList.length);
     }
   }
 

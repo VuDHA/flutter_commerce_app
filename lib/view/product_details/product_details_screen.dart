@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:intl/intl.dart';
+import 'package:my_grocery/controller/controllers.dart';
 
+import '../../model/cart_item.dart';
 import '../../model/product.dart';
+import '../cart/cart_screen.dart';
 import 'components/product_carousel_slider.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -15,7 +19,6 @@ class ProductDetailsScreen extends StatefulWidget {
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   NumberFormat formatter = NumberFormat('00');
   int _qty = 1;
-  int _tagIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -92,48 +95,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                   const SizedBox(width: 10),
-
-                  // Tag selection
-                  Container(
-                    decoration: BoxDecoration(
-                        border: Border.all(width: 1), borderRadius: const BorderRadius.all(Radius.circular(8))),
-                    child: Row(
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            if (_tagIndex > 0) {
-                              setState(() {
-                                _tagIndex--;
-                              });
-                            }
-                          },
-                          child: Icon(
-                            Icons.keyboard_arrow_left_sharp,
-                            size: 32,
-                            color: Colors.grey.shade800,
-                          ),
-                        ),
-                        Text(
-                          widget.product.tags[_tagIndex].title,
-                          style: TextStyle(fontSize: 18, color: Colors.grey.shade800),
-                        ),
-                        InkWell(
-                          onTap: () {
-                            if (_tagIndex != (widget.product.tags.length - 1)) {
-                              setState(() {
-                                _tagIndex++;
-                              });
-                            }
-                          },
-                          child: Icon(
-                            Icons.keyboard_arrow_right_sharp,
-                            size: 32,
-                            color: Colors.grey.shade800,
-                          ),
-                        )
-                      ],
-                    ),
-                  )
                 ],
               ),
             ),
@@ -169,7 +130,23 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             backgroundColor: MaterialStateProperty.all<Color>(Theme.of(context).primaryColor),
           ),
           onPressed: () {
-            // Handle the "Add to Cart" button click
+            final CartItem cartItem = CartItem(
+              id: cartController.cartItems.length + 1,
+              product: widget.product,
+              quantity: _qty,
+            );
+
+            // Add the CartItem to the cart
+            cartController.addToCart(cartItem);
+
+            // When the card is tapped, navigate to the ProductDetailsScreen
+            FocusScope.of(context).requestFocus(FocusNode());
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const CartScreen(),
+              ),
+            );
           },
           child: const Padding(
             padding: EdgeInsets.all(6.0),

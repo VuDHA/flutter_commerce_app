@@ -10,10 +10,12 @@ import 'package:my_grocery/route/app_page.dart';
 import 'package:my_grocery/route/app_route.dart';
 import 'package:my_grocery/theme/app_theme.dart';
 
+import 'model/cart_item.dart';
+import 'model/tag.dart';
+
 // Entry point of the Flutter application
 void main() async {
-  WidgetsFlutterBinding
-      .ensureInitialized(); // Ensure Flutter bindings are initialized
+  WidgetsFlutterBinding.ensureInitialized(); // Ensure Flutter bindings are initialized
   await Hive.initFlutter(); // Initialize Hive for local data storage
 
   // Register adapters for Hive to serialize and deserialize custom objects
@@ -21,6 +23,9 @@ void main() async {
   Hive.registerAdapter(CategoryAdapter());
   Hive.registerAdapter(ProductAdapter());
   Hive.registerAdapter(UserAdapter());
+  Hive.registerAdapter(CartItemAdapter());
+  Hive.registerAdapter(TagAdapter());
+  Hive.openBox<CartItem>('cart');
 
   // Configure loading settings
   configLoading();

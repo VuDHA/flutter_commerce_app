@@ -15,8 +15,7 @@ class LocalCategoryService {
   }
 
   // Method to replace all popular categories in the popular category box
-  Future<void> assignAllPopularCategories(
-      {required List<Category> popularCategories}) async {
+  Future<void> assignAllPopularCategories({required List<Category> popularCategories}) async {
     await _popularCategoryBox.clear();
     await _popularCategoryBox.addAll(popularCategories);
   }
