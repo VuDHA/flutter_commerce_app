@@ -2,10 +2,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:my_grocery/controller/controllers.dart';
 import 'package:my_grocery/service/local_service/local_auth_service.dart';
 import 'package:my_grocery/service/remote_service/remote_auth_service.dart';
+import 'package:my_grocery/view/dashboard/dashboard_admin_screen.dart';
 
 import '../model/user.dart';
+import '../view/admin/productlist.dart';
 
 // Controller class for handling authentication-related functionality
 class AuthController extends GetxController {
@@ -51,8 +54,7 @@ class AuthController extends GetxController {
         String token = json.decode(result.body)['jwt'];
 
         // Create the user's profile remotely
-        var userResult = await RemoteAuthService()
-            .createProfile(fullName: fullName, token: token);
+        var userResult = await RemoteAuthService().createProfile(fullName: fullName, token: token);
 
         // If profile creation is successful
         if (userResult.statusCode == 200) {
@@ -99,6 +101,7 @@ class AuthController extends GetxController {
       if (result.statusCode == 200) {
         // Extract the JWT token from the response
         String token = json.decode(result.body)['jwt'];
+        String role = json.decode(result.body)["user"]["perm"];
 
         // Retrieve the user's profile remotely
         var userResult = await RemoteAuthService().getProfile(token: token);
@@ -114,7 +117,13 @@ class AuthController extends GetxController {
 
           // Show success message and dismiss loading indicator
           EasyLoading.showSuccess("Welcome to MyGrocery!");
-          Navigator.of(Get.overlayContext!).pop();
+          if (role == "User") {
+            Navigator.of(Get.overlayContext!).pop();
+          } else {
+            dashboardController.updateIndex(0);
+            // Switch directly to the admin screen using Get
+            Get.off(() => DashboardAdminScreen());
+          }
         } else {
           EasyLoading.showError('Something wrong. Try again!');
         }

@@ -3,12 +3,11 @@ import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:get/get.dart';
 import 'package:my_grocery/controller/dashboard_controller.dart';
 import 'package:my_grocery/view/account/account_screen.dart';
-import 'package:my_grocery/view/category/category_screen.dart';
-import 'package:my_grocery/view/home/home_screen.dart';
-import 'package:my_grocery/view/product/product_screen.dart';
 
-class DashboardScreen extends StatelessWidget {
-  const DashboardScreen({Key? key}) : super(key: key);
+import '../admin/productlist.dart';
+
+class DashboardAdminScreen extends StatelessWidget {
+  const DashboardAdminScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +20,7 @@ class DashboardScreen extends StatelessWidget {
         body: SafeArea(
           child: IndexedStack(
             index: controller.tabIndex,
-            children: const [HomeScreen(), ProductScreen(), CategoryScreen(), AccountScreen()],
+            children: const [AdminScreen(), AccountScreen()],
           ),
         ),
 
@@ -44,8 +43,6 @@ class DashboardScreen extends StatelessWidget {
             },
             items: const [
               BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.category), label: 'Category'),
-              BottomNavigationBarItem(icon: Icon(Icons.menu), label: 'Menu'),
               BottomNavigationBarItem(icon: Icon(Icons.account_circle), label: 'Account')
             ],
           ),

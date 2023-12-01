@@ -2,6 +2,7 @@ import 'package:my_grocery/controller/auth_controller.dart';
 import 'package:my_grocery/controller/cart_controller.dart';
 import 'package:my_grocery/controller/category_controller.dart';
 import 'package:my_grocery/controller/home_controller.dart';
+import 'package:my_grocery/controller/product_admin_controller.dart';
 import 'package:my_grocery/controller/product_controller.dart';
 import 'package:my_grocery/controller/profile_controller.dart';
 
@@ -28,3 +29,5 @@ AuthController authController = AuthController.instance;
 // Handles the state and logic related to user profiles, including displaying user information
 // and managing profile settings.
 ProfileController profileController = ProfileController.instance;
+
+CrudProductController crudProductController = CrudProductController.instance;

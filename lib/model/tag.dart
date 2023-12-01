@@ -21,4 +21,13 @@ class Tag {
         title: data['attributes']['title'],
         price: data['attributes']['price'].toDouble(),
       );
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'price': price,
+      // Add other necessary fields based on your Product model
+    };
+  }
 }

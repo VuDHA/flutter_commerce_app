@@ -55,6 +55,17 @@ class Product {
     return total;
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'description': description,
+      'images': images,
+      'tags': tags.map((tag) => tag.toJson()).toList(),
+      // Add other necessary fields based on your Product model
+    };
+  }
+
   // Factory method to create a popular product instance from a JSON map
   factory Product.popularProductFromJson(Map<String, dynamic> data) => Product(
         id: data['id'],

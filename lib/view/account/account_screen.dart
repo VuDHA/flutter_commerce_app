@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_grocery/controller/controllers.dart';
 import 'package:my_grocery/view/account/auth/profile_info.dart';
+import 'package:my_grocery/view/dashboard/dashboard_screen.dart';
 
 import 'auth/sign_in_screen.dart';
 
@@ -37,10 +38,8 @@ class AccountScreen extends StatelessWidget {
                   children: [
                     // Display user's full name or a sign-in prompt
                     Text(
-                      authController.user.value?.fullName ??
-                          "Sign in your account",
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.w500),
+                      authController.user.value?.fullName ?? "Sign in your account",
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
                     )
                   ],
                 )
@@ -54,16 +53,10 @@ class AccountScreen extends StatelessWidget {
               onClick: () {
                 if (authController.user.value != null) {
                   // Navigate to the Profile Screen if the user is signed in
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const ProfileScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfileScreen()));
                 } else {
                   // Navigate to the Sign-In Screen if the user is not signed in
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignInScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInScreen()));
                 }
               }),
           // Additional account-related cards can be added here
@@ -78,12 +71,10 @@ class AccountScreen extends StatelessWidget {
                 if (authController.user.value != null) {
                   // Sign out if the user is signed in
                   authController.signOut();
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const DashboardScreen()));
                 } else {
                   // Navigate to the Sign-In Screen if the user is not signed in
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignInScreen()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SignInScreen()));
                 }
               }))
         ],
@@ -92,8 +83,7 @@ class AccountScreen extends StatelessWidget {
   }
 
   // Widget for building an account-related card
-  Widget buildAccountCard(
-      {required String title, required Function() onClick}) {
+  Widget buildAccountCard({required String title, required Function() onClick}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 14),
       // GestureDetector for making the card tappable
@@ -105,16 +95,14 @@ class AccountScreen extends StatelessWidget {
           height: 60,
           padding: const EdgeInsets.symmetric(horizontal: 20),
           // Decoration for the card
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(12)),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.4),
-                  spreadRadius: 0.1,
-                  blurRadius: 7,
-                )
-              ]),
+          decoration:
+              BoxDecoration(color: Colors.white, borderRadius: const BorderRadius.all(Radius.circular(12)), boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.4),
+              spreadRadius: 0.1,
+              blurRadius: 7,
+            )
+          ]),
           // Row for card content
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -122,8 +110,7 @@ class AccountScreen extends StatelessWidget {
               // Display the title of the card
               Text(
                 title,
-                style:
-                    const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
+                style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 18),
               ),
               // Arrow icon for indicating that the card is tappable
               const Icon(Icons.keyboard_arrow_right_outlined)

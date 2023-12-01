@@ -25,7 +25,7 @@ class CartController extends GetxController {
 
     if (isInCart) {
       // If the product is already in the cart, update the quantity
-      updateQuantity(cartItem.product.id, cartItem.quantity);
+      updateQuantitywhenAdd(cartItem.product.id, cartItem.quantity);
     } else {
       // If the product is not in the cart, add it to the cart items list
       cartItems.add(cartItem);
@@ -35,6 +35,24 @@ class CartController extends GetxController {
   /// Method to update the quantity of a cart item in the cart.
   /// It finds the cart item with the specified ID and updates its quantity.
   void updateQuantity(int cartId, int newQuantity) {
+    // Find the cart item with the specified ID
+    CartItem? existingCartItem = cartItems.firstWhereOrNull((item) => item.id == cartId);
+
+    if (existingCartItem != null) {
+      if (newQuantity == 0) {
+        existingCartItem.quantity = 1;
+        cartItems.refresh();
+      } else {
+        // If the cart item is found, update its quantity
+        existingCartItem.quantity = newQuantity;
+        cartItems.refresh();
+      }
+    }
+  }
+
+  /// Method to update the quantity of a cart item in the cart.
+  /// It finds the cart item with the specified ID and updates its quantity.
+  void updateQuantitywhenAdd(int cartId, int newQuantity) {
     // Find the cart item with the specified ID
     CartItem? existingCartItem = cartItems.firstWhereOrNull((item) => item.id == cartId);
 
