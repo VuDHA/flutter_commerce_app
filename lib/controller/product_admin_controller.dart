@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:my_grocery/model/product.dart';
-import 'package:my_grocery/service/remote_service/remote_crud_product_service.dart';
+import 'package:my_grocery/service/remote_service/remote_product.dart';
 
 class CrudProductController extends GetxController {
   // Singleton instance of CrudProductController
@@ -43,7 +43,7 @@ class CrudProductController extends GetxController {
       );
 
       // Save the new product to the remote service
-      var result = await RemoteProductCrudService().create(newProduct.toJson());
+      var result = await RemoteProductService().create(newProduct.toJson());
 
       // If the product is successfully created remotely
       if (result != null) {
@@ -68,7 +68,14 @@ class CrudProductController extends GetxController {
       Product existingProduct = productList.firstWhere((product) => product.id == productId);
 
       // Create a new product instance with the updated data
-      Product updatedProduct = Product(
+      var updatedProduct = Map<String, dynamic>.from({
+        'id': existingProduct.id,
+        'name': nameController.text,
+        'description': descriptionController.text,
+        'tags': existingProduct.tags,
+      });
+
+      Product updatedProductt = Product(
         id: existingProduct.id,
         name: nameController.text,
         description: descriptionController.text,
@@ -77,18 +84,15 @@ class CrudProductController extends GetxController {
       );
 
       // Save the updated product to the remote service
-      var result = await RemoteProductCrudService().update(id: productId, updatedData: updatedProduct.toJson());
+      var result = await RemoteProductService().update(id: productId, updatedData: updatedProduct);
 
       // If the product is successfully updated remotely
       if (result != null) {
         // Replace the existing product in the local list with the updated product
         int index = productList.indexWhere((product) => product.id == productId);
         if (index != -1) {
-          productList[index] = updatedProduct;
+          productList[index] = updatedProductt;
         }
-
-        // Print a success message or handle it as needed
-        print('Product updated successfully');
       }
     } finally {
       // Set the saving state for the product to false after updating is complete
@@ -103,7 +107,7 @@ class CrudProductController extends GetxController {
       isSavingProduct(true);
 
       // Delete the product from the remote service
-      var result = await RemoteProductCrudService().delete(id: productId);
+      var result = await RemoteProductService().delete(id: productId);
 
       // If the product is successfully deleted remotely
       if (result != null) {
@@ -126,7 +130,7 @@ class CrudProductController extends GetxController {
       isSavingProduct(true);
 
       // Fetch all products from the remote service
-      var result = await RemoteProductCrudService().getAll();
+      var result = await RemoteProductService().getAll();
 
       // If products are available from the remote service
       if (result != null) {

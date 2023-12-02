@@ -17,6 +17,8 @@ class CategoryController extends GetxController {
   // RxBool for observing the loading state of categories
   RxBool isCategoryLoading = false.obs;
 
+  Rx<Category?> selectedCategory = Rx<Category?>(null);
+
   // Initialization method called when the controller is first created
   @override
   void onInit() async {
@@ -50,8 +52,7 @@ class CategoryController extends GetxController {
         categoryList.assignAll(categoryListFromJson(result.body));
 
         // Update local storage with the fetched categories
-        _localCategoryService.assignAllCategories(
-            categories: categoryListFromJson(result.body));
+        _localCategoryService.assignAllCategories(categories: categoryListFromJson(result.body));
       }
     } finally {
       // Set the loading state to false after fetching is complete

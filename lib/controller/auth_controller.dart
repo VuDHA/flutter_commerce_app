@@ -29,6 +29,8 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
+  LocalAuthService get localAuthService => _localAuthService;
+
   // Method for user registration
   void signUp({
     required String fullName,
