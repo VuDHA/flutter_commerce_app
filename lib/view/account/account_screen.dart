@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:my_grocery/controller/controllers.dart';
 import 'package:my_grocery/view/account/auth/profile_info.dart';
 import 'package:my_grocery/view/dashboard/dashboard_screen.dart';
 
+import '../../controller/auth_controller.dart';
+import '../../service/local_service/local_auth_service.dart';
+import '../dashboard/dashboard_admin_screen.dart';
 import 'auth/sign_in_screen.dart';
 
 // Represents the Account Screen in the application
@@ -13,6 +17,16 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Padding to provide spacing from the edges of the screen
+    // late LocalAuthService localAuthService; // Late initialization
+    // late String? role = null;
+    // if (Get.isRegistered<AuthController>()) {
+    //   // Access the localAuthService from the registered instance
+    //   localAuthService = authController.localAuthService;
+    //   if (Hive.isBoxOpen("_roleBox")) {
+    //     role = localAuthService.getRole();
+    //   }
+    // }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       // ListView for scrollable content
@@ -47,6 +61,13 @@ class AccountScreen extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 50),
+          // if (role == "Admin")
+          // buildAccountCard(
+          //     title: "Admin Page",
+          //     onClick: () {
+          //       // Navigate to the Profile Screen if the user is signed in
+          //       Get.off(() => const DashboardAdminScreen());
+          //     }),
           // Build a card for navigating to the Profile Screen
           buildAccountCard(
               title: "Profile Info",

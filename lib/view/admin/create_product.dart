@@ -9,7 +9,7 @@ class CreateProductScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Create Product'),
+        title: const Text('Create Product'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -19,11 +19,11 @@ class CreateProductScreen extends StatelessWidget {
             // Add input fields for product details
             TextField(
               controller: crudProductController.nameController,
-              decoration: InputDecoration(labelText: 'Product Name'),
+              decoration: const InputDecoration(labelText: 'Product Name'),
             ),
             TextField(
               controller: crudProductController.descriptionController,
-              decoration: InputDecoration(labelText: 'Product Description'),
+              decoration: const InputDecoration(labelText: 'Product Description'),
             ),
             // Button to create the product
             ElevatedButton(
@@ -33,7 +33,7 @@ class CreateProductScreen extends StatelessWidget {
                 // Navigate back to the admin screen after product creation
                 Get.back();
               },
-              child: Text('Create Product'),
+              child: const Text('Create Product'),
             ),
           ],
         ),

@@ -71,12 +71,12 @@ class MainHeader extends StatelessWidget {
           const SizedBox(width: 10),
           GestureDetector(
             onTap: () {
-              Get.to(() => CartScreen());
+              Get.to(() => const CartScreen());
             },
             child: Badge(
               badgeContent: Obx(() => Text(
                     cartController.cartItems.length.toString(),
-                    style: TextStyle(color: Colors.white),
+                    style: const TextStyle(color: Colors.white),
                   )),
               badgeStyle: BadgeStyle(
                 badgeColor: Theme.of(context).primaryColor,

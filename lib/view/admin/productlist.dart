@@ -21,23 +21,23 @@ class AdminScreen extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   // Navigate to the product creation screen
-                  Get.to(() => CreateProductScreen());
+                  Get.to(() => const CreateProductScreen());
                 },
-                child: Text('Create Product'),
+                child: const Text('Create Product'),
               ),
             ),
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
                   // Manually trigger the update of the UI
-                  crudProductController.getProducts();
+                  productController.getProducts();
                 },
                 child: Obx(
                   () {
-                    var productList = crudProductController.productList;
+                    var productList = productController.productList;
 
                     if (productList.isEmpty) {
-                      return Center(
+                      return const Center(
                         child: Text('No products available.'),
                       );
                     }
@@ -51,8 +51,8 @@ class AdminScreen extends StatelessWidget {
                           subtitle: Text('Total Price: \$${product.totalPrice.toStringAsFixed(2)}'),
                           leading: CachedNetworkImage(
                             imageUrl: product.images.isNotEmpty ? baseUrl + product.images.first : '',
-                            placeholder: (context, url) => CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
+                            placeholder: (context, url) => const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
                             height: 50,
                             width: 50,
                             fit: BoxFit.cover,
@@ -61,14 +61,14 @@ class AdminScreen extends StatelessWidget {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               IconButton(
-                                icon: Icon(Icons.edit),
+                                icon: const Icon(Icons.edit),
                                 onPressed: () {
                                   // Navigate to the product edit screen
                                   Get.to(() => UpdateProductScreen(product: product));
                                 },
                               ),
                               IconButton(
-                                icon: Icon(Icons.delete),
+                                icon: const Icon(Icons.delete),
                                 onPressed: () {
                                   // Call a method to delete the product
                                   crudProductController.deleteProduct(product.id);

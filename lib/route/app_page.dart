@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:my_grocery/route/app_route.dart';
+import 'package:my_grocery/view/dashboard/dashboard_admin_screen.dart';
 import 'package:my_grocery/view/dashboard/dashboard_binding.dart';
 import 'package:my_grocery/view/dashboard/dashboard_screen.dart';
 
@@ -15,5 +16,10 @@ class AppPage {
       // Binding class associated with the page
       binding: DashboardBinding(),
     ),
+    GetPage(
+      name: AppRoute.admin,
+      page: () => const DashboardAdminScreen(),
+      binding: DashboardBinding(),
+    )
   ];
 }

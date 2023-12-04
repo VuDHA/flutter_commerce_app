@@ -51,9 +51,9 @@ class RemoteProductService {
   Future<dynamic> create(Map<String, dynamic> productData) async {
     await _checkAuthController();
     var requestData = {"data": productData};
-    var token = await localAuthService.getToken();
+    var token = localAuthService.getToken();
     var response = await client.post(
-      Uri.parse('$remoteUrl'),
+      Uri.parse(remoteUrl),
       headers: {'Content-Type': 'application/json', "Authorization": "Bearer $token"},
       body: jsonEncode(requestData),
     );
@@ -82,7 +82,7 @@ class RemoteProductService {
   Future<dynamic> update({required int id, required Map<String, dynamic> updatedData}) async {
     await _checkAuthController();
     var requestData = {"data": updatedData};
-    var token = await localAuthService.getToken();
+    var token = localAuthService.getToken();
     var response = await client.put(
       Uri.parse('$remoteUrl/$id'),
       headers: {'Content-Type': 'application/json', "Authorization": "Bearer $token"},
@@ -94,7 +94,7 @@ class RemoteProductService {
   // Method for deleting a product by ID
   Future<dynamic> delete({required int id}) async {
     await _checkAuthController();
-    var token = await localAuthService.getToken();
+    var token = localAuthService.getToken();
     var response = await client.delete(
       Uri.parse('$remoteUrl/$id'),
       headers: {'Content-Type': 'application/json', "Authorization": "Bearer $token"},

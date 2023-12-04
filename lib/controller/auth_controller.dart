@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:my_grocery/controller/controllers.dart';
+import 'package:my_grocery/route/app_route.dart';
 import 'package:my_grocery/service/local_service/local_auth_service.dart';
 import 'package:my_grocery/service/remote_service/remote_auth_service.dart';
 import 'package:my_grocery/view/dashboard/dashboard_admin_screen.dart';
+import 'package:my_grocery/view/dashboard/dashboard_binding.dart';
 
 import '../model/user.dart';
-import '../view/admin/productlist.dart';
 
 // Controller class for handling authentication-related functionality
 class AuthController extends GetxController {
@@ -116,6 +117,7 @@ class AuthController extends GetxController {
           // Save the token and user locally
           await _localAuthService.addToken(token: token);
           await _localAuthService.addUser(user: user.value!);
+          await _localAuthService.addRole(role: role);
 
           // Show success message and dismiss loading indicator
           EasyLoading.showSuccess("Welcome to MyGrocery!");
@@ -124,7 +126,7 @@ class AuthController extends GetxController {
           } else {
             dashboardController.updateIndex(0);
             // Switch directly to the admin screen using Get
-            Get.off(() => DashboardAdminScreen());
+            Get.offAll(() => DashboardAdminScreen(), binding: DashboardBinding());
           }
         } else {
           EasyLoading.showError('Something wrong. Try again!');

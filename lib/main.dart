@@ -25,7 +25,6 @@ void main() async {
   Hive.registerAdapter(UserAdapter());
   Hive.registerAdapter(CartItemAdapter());
   Hive.registerAdapter(TagAdapter());
-  Hive.openBox<CartItem>('cart');
 
   // Configure loading settings
   configLoading();
