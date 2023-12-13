@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
 void configLoading() {
   // Access the EasyLoading instance and edited its properties
   EasyLoading.instance
-    ..displayDuration = const Duration(milliseconds: 2000)
+    ..displayDuration = const Duration(seconds: 10)
     ..indicatorType = EasyLoadingIndicatorType.fadingCircle
     ..loadingStyle = EasyLoadingStyle.dark
     ..indicatorSize = 45.0

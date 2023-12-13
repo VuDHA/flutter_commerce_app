@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:my_grocery/controller/controllers.dart';
+import 'package:my_grocery/view/cart/checkout_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -69,14 +70,14 @@ class CartScreen extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => const CartScreen(),
+                builder: (context) => const CheckoutScreen(),
               ),
             );
           },
           child: const Padding(
             padding: EdgeInsets.all(6.0),
             child: Text(
-              'Add to Cart',
+              'Check out',
               style: TextStyle(fontSize: 16),
             ),
           ),

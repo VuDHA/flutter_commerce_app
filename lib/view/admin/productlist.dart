@@ -4,11 +4,15 @@ import 'package:my_grocery/controller/controllers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:my_grocery/view/admin/create_product.dart';
 import 'package:my_grocery/view/admin/update_product.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 import '../../const.dart';
 
 class AdminScreen extends StatelessWidget {
-  const AdminScreen({Key? key}) : super(key: key);
+  AdminScreen({Key? key}) : super(key: key);
+
+  File? _selectedImage; // Variable to store the selected image file
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +22,26 @@ class AdminScreen extends StatelessWidget {
           children: [
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Navigate to the product creation screen
-                  Get.to(() => const CreateProductScreen());
-                },
-                child: const Text('Create Product'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center, // Center the buttons horizontally
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Navigate to the product creation screen
+                      Get.to(() => const CreateProductScreen());
+                    },
+                    child: const Text('Create Product'),
+                  ),
+                  SizedBox(width: 16), // Add some space between buttons
+
+                  ElevatedButton(
+                    onPressed: () {
+                      // Call a method to handle image upload
+                      _pickImage();
+                    },
+                    child: const Text('Upload Image'),
+                  ),
+                ],
               ),
             ),
             Expanded(
@@ -87,5 +105,17 @@ class AdminScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  // Method to handle image upload
+  void _pickImage() async {
+    final pickedImage = await ImagePicker().pickMedia();
+
+    if (pickedImage != null) {
+      // Set the selected image file
+      _selectedImage = File(pickedImage.path);
+      authController.upload(_selectedImage);
+      // For example, you can upload the image to a server or display it somewhere.
+    }
   }
 }

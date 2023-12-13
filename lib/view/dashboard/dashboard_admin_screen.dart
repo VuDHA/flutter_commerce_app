@@ -20,7 +20,7 @@ class DashboardAdminScreen extends StatelessWidget {
         body: SafeArea(
           child: IndexedStack(
             index: controller.tabIndex,
-            children: const [AdminScreen(), AccountScreen()],
+            children: [AdminScreen(), AccountScreen()],
           ),
         ),
 
